@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kinobilletter</title>
+</head>
+<body>
+<h1>Bestilling av kinobiletter</h1>
+<label for = "bestilling" >Velg film:</label>
+<select id = "bestilling" onchange="VelgFilm();">
+    <option>Velg film her</option><br>
+    <option value="Avatar">Avatar</option>
+    <option value="The uncle">The uncle</option>
+</select>
+
+   <div>
+    <form action=""> <br>
+        <label for="antall">Antall: </label>
+        <input type="text" id="antall" name="antall" pattern="[1-9][0-9]*" required title="antall biletter"><br><br>
+        <span id="feilmelding_antall"></span>
+    </form>
+   </div>
+<br>
+    <div>
+    <form action=""> <br>
+        <label for = "fornavn">Fornavn: </label>
+        <input type="text" id="fornavn" name="fornavn"pattern="[A-Za-z]*" required title="fornavnet"><br><br>
+        <span id="feilmelding_fornavn"></span>
+    </form>
+  </div>
+<br>
+    <div>
+    <form action="">  <br>
+        <label for="etternavn">Etternavn: </label>
+        <input type="text" id="etternavn" name="etternavn"pattern="[A-Za-z]*" required title="etternavnet"><br><br>
+        <span id="feilmelding_etternavn"></span>
+    </form>
+    </div>
+<br>
+
+    <div>
+    <form action=""> <br>
+        <label for="telefonnr">Telefonnr: </label>
+        <input type="text" id="telefonnr" name="telefonnr"pattern="[1-9][0-9]{8}" required title="telefonnummeret"><br><br>
+        <span id="feilmelding_telefonnr"></span>
+    </form>
+    </div>
+<br>
+
+ <div>
+    <form action=""> <br>    
+        <label for="epost">Epost: </label>
+        <input type="text" id="epost" name="epost"pattern="[A-Za-z]*[@][a-z]*[.][a-z]*" required title="eposten"><br><br>
+        <span id = "feilmelding_epost"></span><br><br>
+    </form>
+    <button type="button" onclick="LagreBilletter()">Kjøp billett</button>
+</div>
+<h2>Alle Billetter</h2>
+<ul id="array_utskrift"></ul>
+
+<button type="button" onclick="SlettBilletter()">Slett alle billettene</button>
+
+<script src="obligen.js"></script>
+
+</body>
+</html>
