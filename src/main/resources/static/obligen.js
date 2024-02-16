@@ -13,10 +13,6 @@ let biletter= [];
         let epost = document.getElementById("epost").value;
 
 
-        //Dersom feltene ikke er fyllt inn, så får du opp en feilmelding. Hvis for eksempel antallet
-        // er skrevet inn i inputboksen, så får du ikke lenger feilmelding på antallet, men på de andre får du
-        //dersom de andre er også tomme.
-
         nullstillFeilmeldinger();
 
         // Validering av inputverdier
@@ -27,22 +23,29 @@ let biletter= [];
         let epostPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; //Brukte dette formatet ved hjelp av denne linken: https://emaillistvalidation.com/blog/email-validation-in-javascript-using-regular-expressions-the-ultimate-guide/
         let epostValid = epostPattern.test(epost);
 
-        // Hvis all input er gyldig, legg til billett og vis dem
+        // Denne delen av koden sjekker om all input fra brukeren er gyldig.
+        // Hvis alt er i orden, legges billetten til i en liste, og billettinformasjonen vises.
         if (antallValid && fornavnValid && etternavnValid && telefonnrValid && epostValid) {
-            leggTiliArray();
-            visBilletter();
-            tomBokser();
+            leggTiliArray(); //Leger til billettene i arrayet "biletter"
+            visBilletter(); //Viser billettene
+            tomBokser(); //Tømmer inputfeltene
 
+            /*
+            Hvis minst ett av valideringskriteriene ikke er oppfylt, betyr det at det er feil i inputen. I så fall utføres følgende handlinger:
+            For hvert av de feilaktige feltene, settes tilsvarende feilmelding basert på hvilken type feil det er.
+            For eksempel, hvis antall-feltet er tomt, vil en melding om å fylle inn antall vises,
+            eller hvis antall er ugyldig (ikke et tall eller no sånt), vil en melding om ugyldig antall vises.
+            Dette gjentas for de andre feltene: fornavn, etternavn, telefonnr, og epost.
+            */
         }
-
-
-
         else {
             if (antall === "") {
                 document.getElementById("feilmelding_antall").innerText = "Fyll inn antallet";
-            } else if (antallValid === false) {
+            }
+            else if (antallValid === false) {
                 document.getElementById("feilmelding_antall").innerText = "Ugyldig antall";
-            } else {
+            }
+            else {
                 document.getElementById("feilmelding_antall").innerText = "";
             }
             if (fornavn === "") {
@@ -58,26 +61,28 @@ let biletter= [];
                 document.getElementById("feilmelding_etternavn").innerText = "Fyll inn etternavnet";
             }
 
-                else if (etternavnValid === false){
+            else if (etternavnValid === false){
                     document.getElementById("feilmelding_etternavn").innerText = "Ugyldig etternavn";
-                }
-             else {
+            }
+            else {
                 document.getElementById("feilmelding_etternavn").innerText = "";
             }
             if (telefonnr === "") {
                 document.getElementById("feilmelding_telefonnr").innerText = "Fyll inn telefonnummeret";
-            } else if (telefonnrValid === false) {
+            }
+            else if (telefonnrValid === false) {
                 document.getElementById("feilmelding_telefonnr").innerText = "Ugyldig telefonnummer";
-            } else {
+            }
+            else {
                 document.getElementById("feilmelding_telefonnr").innerText = "";
             }
             if (epost === "") {
                 document.getElementById("feilmelding_epost").innerText = "Fyll inn eposten";
             }
-                else if (epostValid!==true){
+            else if (epostValid!==true){
                     document.getElementById("feilmelding_epost").innerText = "Ugyldig epost";
-                }
-             else {
+            }
+            else {
                 document.getElementById("feilmelding_epost").innerText = "";
             }
 
@@ -97,8 +102,9 @@ let biletter= [];
         }
 
 
-        //Denne tar informasjon fra inputfeltene altså antall, fornavn, etternavn, telefonnr og epost,
-        //organiserer dem i objektet "bilett" og legger dette objektet til i arrayet "biletter"
+        /*Denne tar informasjon fra inputfeltene altså antall, fornavn, etternavn, telefonnr og epost,
+        organiserer dem i objektet "billett" og legger dette objektet til i arrayet "biletter"
+        */
         function leggTiliArray() {
             let billett = {
                 film: film,
@@ -112,7 +118,7 @@ let biletter= [];
         }
 
         //Inputfeltene tømmes når du kjører programmet i en nettleser, siden feltene skal blankes
-        function tomBokser() {
+            function tomBokser() {
             document.getElementById("bestilling").value = "velg film her";
             document.getElementById("antall").value = "";
             document.getElementById("fornavn").value = "";
@@ -120,17 +126,28 @@ let biletter= [];
             document.getElementById("telefonnr").value = "";
             document.getElementById("epost").value = "";
         }
+
+        /*Denne funksjonen gjør det mulig å vise billettinformasjonen på nettsiden ved hjelp av en for løkke
+        Oppretter en tom streng kalt "utskrift". Deretter går en gjennom hvert billettobjekt i biletter-arrayen ved hjelp av en forløkke
+        For hvert billettobjekt legger den til informasjonen om billetten i utskrift-strengen ved hjelp av en sammensetning av tekst og billettens attributter
+        (film, antall, fornavn, etternavn, telefonnr, epost).
+        */
         function visBilletter() {
             let utskrift = "";
             for (let i = 0; i < biletter.length; i++) {
                 let billett = biletter[i];
-                utskrift += `Film: ${billett.film}, Antall: ${billett.antall}, Fornavn: ${billett.fornavn}, Etternavn: ${billett.etternavn}, Telefonnr: ${billett.telefonnr}, Epost: ${billett.epost}<br>`;
+                utskrift += "Film: "+ billett.film+ " Antall: " + billett.antall + " Fornavn: " +billett.fornavn + " Etternavn: " +billett.etternavn+ " Telefonnr: " +billett.telefonnr + " Epost: " +billett.epost;
             }
             document.getElementById("array_utskrift").innerHTML = utskrift;
         }
-
-        function SlettBilletter() {
-            biletter = [];
-            visBilletter();
-        }
     }
+
+    /*Denne funksjonen gjør det mulig å slette arrayet eller tømme arrayet
+     Med andre ord, alle elementene i arrayet blir fjernet, og arrayet blir satt til å være tomt.
+     document.getElementById("array_utskrift").innerHTML = ""; tømmer innholdet i HTML-elementet med ID-en "array_utskrift".
+     Denne delen av koden sørger for at alt innhold som vises i dette elementet fjernes.
+    */
+    function SlettBilletter() {
+       biletter.splice(0,biletter.length);
+       document.getElementById("array_utskrift").innerHTML = "";
+   }
